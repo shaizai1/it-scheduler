@@ -117,6 +117,7 @@ def build_staff_roster(staff_list: list) -> dict:
     """
     return {member.staff_id: member for member in staff_list}
 
+
 def build_unavailability_set() -> set:
     """
     Returns an empty set for tracking unavailable staff IDs on a given date.
