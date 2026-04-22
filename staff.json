@@ -1,0 +1,64 @@
+{
+    "staff": [
+        {
+            "id": "ST001",
+            "name": "Alice Morgan",
+            "role": "network",
+            "max_shifts_per_week": 3
+        },
+        {
+            "id": "ST002",
+            "name": "Ben Clarke",
+            "role": "desktop",
+            "max_shifts_per_week": 1
+        },
+        {
+            "id": "ST003",
+            "name": "Carol Hayes",
+            "role": "senior",
+            "max_shifts_per_week": 2
+        },
+        {
+            "id": "ST004",
+            "name": "David Patel",
+            "role": "network",
+            "max_shifts_per_week": 3
+        },
+        {
+            "id": "ST005",
+            "name": "Emma Walsh",
+            "role": "desktop",
+            "max_shifts_per_week": 3
+        },
+        {
+            "id": "ST006",
+            "name": "Frank O'Brien",
+            "role": "senior",
+            "max_shifts_per_week": 2
+        },
+        {
+            "id": "ST007",
+            "name": "Grace Kim",
+            "role": "network",
+            "max_shifts_per_week": 3
+        },
+        {
+            "id": "ST008",
+            "name": "Henry Foster",
+            "role": "desktop",
+            "max_shifts_per_week": 4
+        },
+        {
+            "id": "ST009",
+            "name": "Isla Turner",
+            "role": "senior",
+            "max_shifts_per_week": 2
+        },
+        {
+            "id": "ST010",
+            "name": "James Reid",
+            "role": "network",
+            "max_shifts_per_week": 3
+        }
+    ]
+}
