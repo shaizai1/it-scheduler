@@ -12,13 +12,10 @@ import json
 from datetime import date
 from pathlib import Path
 
-from exceptions import StaffNotFoundError
 from models import Shift, StaffMember, build_staff_roster
 
 
 STAFF_FILE = Path("staff.json")
-SCHEDULE_JSON = Path("schedule.json")
-SCHEDULE_TXT = Path("schedule.txt")
 
 
 def load_staff(filepath: Path = STAFF_FILE) -> dict:
@@ -67,20 +64,25 @@ def save_schedule_json(
     schedule: list,
     unassigned: list,
     week_start: date,
-    filepath: Path = SCHEDULE_JSON,
+    filepath: Path = None,
 ) -> None:
     """
     Saves the generated schedule to a JSON file.
 
     Both assigned and unassigned shifts are saved so the output is a
     complete record of the week, including staffing gaps.
+    Filename defaults to schedule_YYYY-MM-DD.json to preserve outputs
+    across multiple weeks without overwriting previous schedules.
 
     Args:
         schedule   : List of assigned Shift objects.
         unassigned : List of unassigned Shift objects.
         week_start : The Monday date the schedule was generated for.
-        filepath   : Output path. Defaults to SCHEDULE_JSON.
+        filepath   : Output path. Defaults to schedule_{week_start}.json.
     """
+    if filepath is None:
+        filepath = Path(f"schedule_{week_start}.json")
+
     output = {
         "week_start": week_start.isoformat(),
         "generated": date.today().isoformat(),
@@ -99,21 +101,26 @@ def save_schedule_txt(
     unassigned: list,
     roster: dict,
     week_start: date,
-    filepath: Path = SCHEDULE_TXT,
+    filepath: Path = None,
 ) -> None:
     """
     Saves a human-readable version of the schedule to a text file.
 
     Grouped by date for easy reference. Unassigned shifts are listed
     separately at the end as a staffing gap report.
+    Filename defaults to schedule_YYYY-MM-DD.txt to preserve outputs
+    across multiple weeks without overwriting previous schedules.
 
     Args:
         schedule   : List of assigned Shift objects.
         unassigned : List of unassigned Shift objects.
         roster     : {staff_id: StaffMember} — used to resolve names.
         week_start : The Monday date the schedule was generated for.
-        filepath   : Output path. Defaults to SCHEDULE_TXT.
+        filepath   : Output path. Defaults to schedule_{week_start}.txt.
     """
+    if filepath is None:
+        filepath = Path(f"schedule_{week_start}.txt")
+
     lines = [
         f"IT Support Out-of-Hours Schedule",
         f"Week commencing: {week_start.strftime('%A %d %B %Y')}",

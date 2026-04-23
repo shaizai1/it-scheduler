@@ -1,0 +1,7 @@
+# Generated schedule output files
+schedule_*.json
+schedule_*.txt
+
+# Python cache
+__pycache__/
+*.pyc
