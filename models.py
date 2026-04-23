@@ -99,7 +99,7 @@ class Shift:
         return self.assigned_staff_id is not None
 
     def __str__(self) -> str:
-        """Readable summary of the shift."""
+        """Human-readable summary of the shift."""
         assigned = self.assigned_staff_id if self.is_assigned else "UNASSIGNED"
         return (
             f"[{self.shift_id}] {self.date} | {self.shift_type.upper()} "
