@@ -8,11 +8,10 @@ cases. Edge cases are prioritised as they verify the system behaves
 correctly under unexpected or boundary conditions.
 """
 
-import json
+
 import unittest
 from datetime import date
-from pathlib import Path
-from unittest.mock import mock_open, patch
+from unittest.mock import mock_open
 
 from exceptions import NoStaffAvailableError, StaffNotFoundError
 from input_validator import validate_date_string, validate_monday, validate_staff_id
