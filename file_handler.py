@@ -30,6 +30,7 @@ def load_staff(filepath: Path = STAFF_FILE) -> dict:
 
     Raises:
         FileNotFoundError: If the JSON file does not exist at filepath.
+        ValueError       : If the file contains malformed JSON.
         KeyError         : If a required field is missing from a staff record.
         ValueError       : If a staff record contains an invalid role or shift cap.
     """
@@ -40,7 +41,10 @@ def load_staff(filepath: Path = STAFF_FILE) -> dict:
         )
 
     with open(filepath, "r", encoding="utf-8") as f:
-        data = json.load(f)
+        try:
+            data = json.load(f)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON in '{filepath}': {e}")
 
     staff_list = []
     for record in data["staff"]:

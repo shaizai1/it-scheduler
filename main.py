@@ -9,8 +9,9 @@ the weekly out-of-hours support schedule.
 
 from datetime import date
 
-from exceptions import NoStaffAvailableError, StaffNotFoundError
+from exceptions import StaffNotFoundError
 from file_handler import load_staff, save_schedule_json, save_schedule_txt
+from input_validator import validate_date_string, validate_monday, validate_staff_id
 from scheduler import generate_weekly_schedule, get_staff_schedule
 
 
@@ -18,25 +19,19 @@ def get_week_start() -> date:
     """
     Prompts the user for a week-start date in YYYY-MM-DD format.
 
-    Validates that the entered date is a Monday, as schedules are
-    generated on a Monday-to-Sunday basis.
+    Delegates format and Monday validation to input_validator to keep
+    the menu loop free of validation logic.
 
     Returns:
         date: A validated Monday date object.
-
-    Raises:
-        ValueError: Caught internally if input is not a valid date string.
     """
     while True:
         raw = input("Enter week start date (YYYY-MM-DD, must be a Monday): ").strip()
         try:
-            parsed = date.fromisoformat(raw)
-            if parsed.weekday() != 0:
-                print("  Error: date must be a Monday (e.g. 2025-01-06).")
-                continue
-            return parsed
-        except ValueError:
-            print("  Error: invalid date format. Use YYYY-MM-DD.")
+            parsed = validate_date_string(raw)
+            return validate_monday(parsed)
+        except ValueError as e:
+            print(f"  Error: {e}")
 
 
 def print_menu() -> None:
@@ -92,7 +87,12 @@ def handle_view_staff(roster: dict, schedule: list) -> None:
         print("  No schedule generated yet. Please generate a schedule first.")
         return
 
-    staff_id = input("Enter staff ID (e.g. ST001): ").strip().upper()
+    raw = input("Enter staff ID (e.g. ST001): ")
+    try:
+        staff_id = validate_staff_id(raw)
+    except ValueError as e:
+        print(f"  Error: {e}")
+        return
 
     try:
         shifts = get_staff_schedule(staff_id, schedule, roster)
